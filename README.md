@@ -4,7 +4,8 @@
 ![IMAGE](images/exhook.png)
 进行拦截：
 ![IMAGE](images/sidecar.png)
-
+## 打包emqx-exhook-server
+`docker build -f Dockerfile -t emqx-exhook-server:0.0.1 .`
 ## k8s 部署emqx
 
 ```
