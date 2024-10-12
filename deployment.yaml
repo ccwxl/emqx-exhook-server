@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emqx-deployment
+  labels:
+    app: emqx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emqx
+  template:
+    metadata:
+      labels:
+        app: emqx
+    spec:
+      initContainers:
+        - name: emqx-exhook-server
+          image: emqx-exhook-server:0.0.1
+          restartPolicy: Always
+      containers:
+        - name: emqx
+          image: emqx:5.8.0
+          ports:
+            - name: mqtt
+              containerPort: 1883
+            - name: mqttssl
+              containerPort: 8883
+            - name: mgmt
+              containerPort: 8081
+            - name: ws
+              containerPort: 8083
+            - name: wss
+              containerPort: 8084
+            - name: dashboard
+              containerPort: 18083
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emqx-service
+spec:
+  selector:
+    app: emqx
+  ports:
+    - name: mqtt
+      port: 1883
+      protocol: TCP
+      targetPort: mqtt
+    - name: mqttssl
+      port: 8883
+      protocol: TCP
+      targetPort: mqttssl
+    - name: mgmt
+      port: 8081
+      protocol: TCP
+      targetPort: mgmt
+    - name: ws
+      port: 8083
+      protocol: TCP
+      targetPort: ws
+    - name: wss
+      port: 8084
+      protocol: TCP
+      targetPort: wss
+    - name: dashboard
+      port: 18083
+      protocol: TCP
+      targetPort: dashboard
