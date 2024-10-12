@@ -101,5 +101,5 @@ kubectl port-forward svc/emqx-service 1883:1883
 
 - 对于在k8s的集群的来说也是支持的，因为每个pod都有一个sidecar
 - 对于sidecar 也可以动态升级，不影响主容器
-- 因每个pod都有一个sidecar，所有挂掉一台不会影响emqx集群
+- 因每个pod都有一个sidecar，原生支持负载均衡,且挂掉一台不会影响emqx集群
 - [github](https://github.com/ccwxl/emqx-exhook-server)
